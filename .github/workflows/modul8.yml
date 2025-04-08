@@ -6,20 +6,20 @@ on:
       - 'github furuvegen/iac/iac-1/modul8github/**'
   pull_request:
     branches:
-      - main  # Begge push og pull request må spesifiseres
-      paths:
-        - 'github furuvegen/iac/iac-1/modul8github/**'  # Sjekk for endringer i den spesifikke mappen
+      - main  # Dette er grenen som vil utløse workflow ved pull request
+    paths:
+      - 'github furuvegen/iac/iac-1/modul8github/**'  # Legger til paths for pull request
 
 jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-22.04
-    env:  # Riktig plass for 'env' - nivået for 'jobs' eller 'steps'
+    env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      WORKING_DIR: './github furuvegen/iac/iac-1/modul8github'  # Husk å bruke enfotgetter ved plasser!
+      WORKING_DIR: './github furuvegen/iac/iac-1/modul8github' # Pass på at mappene dine eksisterer
 
     steps:
       - name: Checkout
