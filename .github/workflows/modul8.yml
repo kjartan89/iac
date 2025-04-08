@@ -3,7 +3,7 @@ name: testavactions
 on:
   push:
     paths:
-      - 'iac/iac-1/modul8github/**' # Bruker '**' for å inkludere alle filer i mappen
+      - 'modul8github/**' # Bruker '**' for å inkludere alle filer i mappen
   workflow_dispatch:
 
 jobs:
