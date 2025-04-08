@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - 'github furuvegen/iac/iac-1/modul8github/**' # Bruker '**' for å inkludere alle filer i mappen
-  workflow_dispatch: # Dette tillater manuell utløsing
+  workflow_dispatch: # Dette tillater manuell utløsin
 
 jobs:
   resourcegroups:
