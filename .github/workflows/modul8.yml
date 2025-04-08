@@ -17,7 +17,8 @@ env:
 jobs:
   terraform:
     name: 'Deploy to Azure'
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,27 +26,27 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: 1.3.0  # Adjust if necessary
+          terraform_version: 1.3.0  
 
+      
       - name: Terraform Init
         run: terraform init
-        working-directory: './iac'  # Adjust to your Terraform directory
-
+        working-directory: './iac-1/modul8github'  
       - name: Terraform Format
         run: terraform fmt -check
-        working-directory: './iac'
+        working-directory: './iac-1/modul8github'  
 
       - name: Terraform Plan
         run: terraform plan -out=tfplan
-        working-directory: './iac'
+        working-directory: './iac-1/modul8github'  
 
       - name: Publish Terraform Plan
-        uses: actions/upload-artifact@v4  # Change this to v3
+        uses: actions/upload-artifact@v3  
         with:
           name: tfplan
-          path: './iac/tfplan'
+          path: './iac-1/modul8github/tfplan'  
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve tfplan
-        working-directory: './iac'
+        working-directory: './iac-1/modul8github'  
