@@ -30,18 +30,18 @@ jobs:
 
       - name: Terraform Init
         run: terraform init
-        working-directory: ./iac/iac-1/modul8github  # Denne stien må være korrekt.
+        working-directory: ./iac/iac-1/modul8github  # Må bekreftes
 
       - name: Terraform Format
         run: terraform fmt -check
-        working-directory: ./iac/iac-1/modul8github  # Denne stien må være korrekt.
+        working-directory: ./iac/iac-1/modul8github  # Må bekreftes
 
       - name: Terraform Plan
         run: terraform plan -out=tfplan
-        working-directory: ./iac/iac-1/modul8github  # Denne stien må være korrekt.
+        working-directory: ./iac/iac-1/modul8github  # Må bekreftes
 
       - name: Publish Terraform Plan
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4  # Oppdatert til v2
         with:
           name: tfplan
           path: ./iac/iac-1/modul8github/tfplan
@@ -49,4 +49,4 @@ jobs:
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve tfplan
-        working-directory: ./iac/iac-1/modul8github  # Denne stien må være korrekt.
+        working-directory: ./iac/iac-1/modul8github  # Må bekreftes
