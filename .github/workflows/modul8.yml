@@ -1,4 +1,4 @@
-name: 'Terraform Azure CI/CD'
+name: 'modul8'
 
 on:
   push:
@@ -16,45 +16,36 @@ env:
 
 jobs:
   terraform:
-    name: 'Terraform'
-    runs-on: ubuntu-22.04
+    name: 'Deploy to Azure'
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Clean up Git
-        run: |
-          rm -f .git/index.lock || true
-          git reset --hard HEAD || true
-          git clean -fd || true
-
-      - name: List Directory
-        run: ls -la './github furuvegen/iac/iac-1/modul8github'
-
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: 1.3.0
+          terraform_version: 1.3.0  # Adjust if necessary
 
       - name: Terraform Init
         run: terraform init
-        working-directory: './github furuvegen/iac/iac-1/modul8github'
+        working-directory: './iac'  # Adjust to your Terraform directory
 
       - name: Terraform Format
         run: terraform fmt -check
-        working-directory: './github furuvegen/iac/iac-1/modul8github'
+        working-directory: './iac'
 
       - name: Terraform Plan
         run: terraform plan -out=tfplan
-        working-directory: './github furuvegen/iac/iac-1/modul8github'
+        working-directory: './iac'
 
       - name: Publish Terraform Plan
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v2
         with:
           name: tfplan
-          path: './github furuvegen/iac/iac-1/modul8github/tfplan'
+          path: './iac/tfplan'
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve tfplan
-        working-directory: './github furuvegen/iac/iac-1/modul8github'
+        working-directory: './iac'
