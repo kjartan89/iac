@@ -40,7 +40,7 @@ jobs:
         working-directory: './github furuvegen/iac/iac-1/modul8github'
 
       - name: Publish Terraform Plan
-        uses: actions/upload-artifact@v3  # Oppdatert til v3
+        uses: actions/upload-artifact@v4  # Oppdatert til v3
         with:
           name: tfplan
           path: './github furuvegen/iac/iac-1/modul8github/tfplan'
