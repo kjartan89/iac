@@ -17,7 +17,7 @@ env:
 jobs:
   terraform:
     name: 'Deploy to Azure'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -40,7 +40,7 @@ jobs:
         working-directory: './iac'
 
       - name: Publish Terraform Plan
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: tfplan
           path: './iac/tfplan'
