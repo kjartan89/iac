@@ -6,7 +6,9 @@ on:
       - 'github furuvegen/iac/iac-1/modul8github/**'
   pull_request:
     branches:
-      - main  # Korrigert: "branches" må spesifiseres her
+      - main  # Begge push og pull request må spesifiseres
+      paths:
+        - 'github furuvegen/iac/iac-1/modul8github/**'  # Sjekk for endringer i den spesifikke mappen
 
 jobs:
   terraform:
