@@ -5,7 +5,6 @@ on:
     paths:
       - 'github furuvegen/iac/iac-1/modul8github/**'
   pull_request:
-    branches:
       - main
 
       env:
