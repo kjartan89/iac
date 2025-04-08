@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - 'iac/iac-1/modul8github/**' # Bruker '**' for å inkludere alle filer i mappen
-  workflow_dispatch: # Dette tillater manuell 
+  workflow_dispatch:
 
 jobs:
   resourcegroups:
@@ -16,7 +16,7 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      WORKING_DIR: 'github furuvegen/iac/iac-1/modul8github' # Definerer arbeidsmappe
+      WORKING_DIR: 'iac/iac-1/modul8github' # Definerer arbeidsmappe
 
     steps:
       - name: Checkout Repository
@@ -33,7 +33,7 @@ jobs:
         working-directory: ${{ env.WORKING_DIR }}
 
       - name: Publish Terraform Plan
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v2
         with:
           name: tfplan
           path: ${{ env.WORKING_DIR }}/tfplan
