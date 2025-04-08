@@ -2,8 +2,10 @@ name: testavactions
 
 on:
   push:
+    branches:
+      - main
     paths:
-      - 'modul8github/**' # Bruker '**' for å inkludere alle filer i mappen
+      - 'iac/iac-1/modul8github/**'
   workflow_dispatch:
 
 jobs:
