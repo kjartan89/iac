@@ -1,0 +1,40 @@
+name: modul8
+
+on:
+  push:
+    paths:
+      - 'github furuvegen/iac/iac-1/modul8github/**'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    runs-on: ubuntu-22.04
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.0.0 # Erstatt med din ønskede Terraform-versjon
+
+    - name: Terraform Init
+      run: terraform init
+
+    - name: Terraform Workspace
+      run: terraform workspace select default || terraform workspace new default
+
+    - name: Terraform Plan
+      run: terraform plan -out=tfplan
+
+    - name: Terraform Apply
+      run: terraform apply -auto-approve tfplan
+      env:
+        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}         # Azure Client ID
+        ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }} # Azure Client Secret
+        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }} # Azure Subscription ID
+        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}       # Azure Tenant ID
+        WORKING_DIR: ./github furuvegen/iac/iac-1/modul8github
