@@ -41,7 +41,7 @@ jobs:
         working-directory: './iac-1/modul8github'  
 
       - name: Publish Terraform Plan
-        uses: actions/upload-artifact@v3  
+        uses: actions/upload-artifact@v4  
         with:
           name: tfplan
           path: './iac-1/modul8github/tfplan'  
