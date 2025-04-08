@@ -1,37 +1,52 @@
 name: 'Terraform Azure CI/CD'
+
 on:
- push:
- branches:
- - main
- pull_request:
- branches:
- - main
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
 env:
- ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
- ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
- ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
- ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+  ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+  ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+  ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+
 jobs:
- terraform:
- name: 'Terraform'
- runs-on: ubuntu-22.04
- steps:
- - name: Checkout
- uses: actions/checkout@v2
- - name: Setup Terraform
- uses: hashicorp/setup-terraform@v1
- - name: Terraform Init
- run: terraform init
- - name: Terraform Format
- run: terraform fmt -check
- - name: Terraform Plan
- run: terraform plan -out=tfplan
- 
- - name: Publish Terraform Plan
- uses: actions/upload-artifact@v4
- with:
- name: tfplan
- path: tfplan
- - name: Terraform Apply
- if: github.ref == 'refs/heads/main' && github.event_name == 'push'
- run: terraform apply -auto-approve tfplan
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: 1.3.0  # Juster til riktig versjon
+
+      - name: Terraform Init
+        run: terraform init
+        working-directory: ./iac/iac-1/modul8github  # Oppdater denne stien
+
+      - name: Terraform Format
+        run: terraform fmt -check
+        working-directory: ./iac/iac-1/modul8github  # Oppdater denne stien
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+        working-directory: ./iac/iac-1/modul8github  # Oppdater denne stien
+
+      - name: Publish Terraform Plan
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfplan
+          path: ./iac/iac-1/modul8github/tfplan  # Oppdater denne stien
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve tfplan
+        working-directory: ./iac/iac-1/modul8github  # Oppdater denne stien
